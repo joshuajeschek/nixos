@@ -3,8 +3,8 @@
 {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
-    ../../private/git.nix
-    ../../private/ssh.nix
+    "${inputs.private}/git.nix"
+    "${inputs.private}/ssh.nix"
   ];
   home.packages = with pkgs; [
     sops
@@ -73,7 +73,7 @@
 
 # SOPS
   sops = {
-    defaultSopsFile = ../../private/secrets.yaml;
+    defaultSopsFile = "${inputs.private}/secrets.yaml";
     defaultSopsFormat = "yaml";
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
   };

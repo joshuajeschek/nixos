@@ -12,6 +12,9 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    private.url = "path:./private";
+    private.flake = false;
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }:

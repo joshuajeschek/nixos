@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
   wallpaper = pkgs.fetchurl {
@@ -8,7 +8,7 @@ let
   screenshotDir = "${config.home.homeDirectory}/Pictures/Screenshots";
   lr = layer: rules: builtins.map (rule: "${rule},${layer}") rules;
 
-  emailShorthands = (import ../../../private/_email.nix).shorthands;
+  emailShorthands = (import "${inputs.private}/_email.nix").shorthands;
   generateEnvFiles = emailShorthands:
     builtins.listToAttrs (
       map (shorthand: {
