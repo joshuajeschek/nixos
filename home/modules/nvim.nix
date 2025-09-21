@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  xdg.configFile.nvim.source = ./config;
+  xdg.configFile.nvim.source = ./files/nvim;
   home.sessionVariables = {
     EDITOR = "nvim";
   };
@@ -67,3 +67,4 @@
     ];
   };
 }
+

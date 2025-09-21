@@ -1,4 +1,9 @@
+{ pkgs, ... }:
 {
+  home.packages = with pkgs; [
+  ];
+
+# ZATHURA
   programs.zathura = {
     enable = true;
     options = {

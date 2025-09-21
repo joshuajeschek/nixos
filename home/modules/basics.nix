@@ -1,10 +1,29 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, inputs, ... }:
 
 {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+    ../../private/git.nix
+    ../../private/ssh.nix
+  ];
   home.packages = with pkgs; [
+    sops
     git-graph
   ];
 
+  services.clipman.enable = true;
+  services.gnome-keyring.enable = true;
+  programs.ssh.enable = true;
+
+# BTOP
+  programs.btop = {
+    enable = true;
+    settings = {
+      color_theme = "gruvbox_dark";
+    };
+  };
+
+# GIT
   programs.git = {
     enable = true;
     userName = "Joshua Jeschek";
@@ -50,5 +69,12 @@
         };
       }
     ];
+  };
+
+# SOPS
+  sops = {
+    defaultSopsFile = ../../private/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
   };
 }

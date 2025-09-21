@@ -23,12 +23,12 @@ let
     (account: {
       name = account.address;
       value = defaults // (aercConfig account.address) // account; })
-    (import ../../../private/_email.nix).accounts);
+    (import ../../private/_email.nix).accounts);
   debugAccounts = pkgs.runCommand "pretty-json" {} ''
     echo '${builtins.toJSON accounts}' | ${pkgs.jq}/bin/jq '.' > $out
   '';
 
-  nextcloud = (import ../../../private/_contacts.nix).nextcloud // {
+  nextcloud = (import ../../private/_contacts.nix).nextcloud // {
     local = {
       type = "filesystem";
       fileExt = ".vcf";
@@ -65,7 +65,7 @@ in
   accounts.contact.accounts.nextcloud = nextcloud;
 
   # EMAIL AND NEXTCLOUD PASSWORDS
-  sops.secrets = mailSecrets // (import ../../../private/_contacts.nix).nextcloudSops;
+  sops.secrets = mailSecrets // (import ../../private/_contacts.nix).nextcloudSops;
 
   home.packages = with pkgs; [
     pandoc

@@ -12,10 +12,8 @@ let
         (builtins.attrNames (builtins.readDir dir)));
 
   imports = [ ./pkgs.nix ]
-    ++ getSimpleConfigs ./programs
-    ++ getDirectoryConfigs ./programs
-    ++ getSimpleConfigs ../private
-    ++ getDirectoryConfigs ../private;
+    ++ getSimpleConfigs ./modules
+    ++ getDirectoryConfigs ./modules;
 
   importsAsString = builtins.concatStringsSep "\n  " (builtins.map builtins.toString imports);
 in
@@ -23,12 +21,6 @@ in
 {
   # imports = builtins.trace "Imports:\n  ${importsAsString}" imports;
   imports = imports;
-  gtk.theme = "Adwaita:dark";
-  services.clipman.enable = true;
-  services.gnome-keyring.enable = true;
-  programs.ssh.enable = true;
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
   home.username = "main";
   home.homeDirectory = "/home/main";
 

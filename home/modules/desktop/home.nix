@@ -7,15 +7,35 @@ let
   };
   screenshotDir = "${config.home.homeDirectory}/Pictures/Screenshots";
   lr = layer: rules: builtins.map (rule: "${rule},${layer}") rules;
+
+  emailShorthands = (import ../../../private/_email.nix).shorthands;
+  generateEnvFiles = emailShorthands:
+    builtins.listToAttrs (
+      map (shorthand: {
+        name = ".config/waybar-extra/" + shorthand + ".env";
+        value = {
+          text = "#!/usr/bin/env bash\nexport ADDRESS='" + emailShorthands.${shorthand} + "'\n";
+        };
+      }) (builtins.attrNames emailShorthands)
+    );
 in
 
 {
   imports = [ ./binds.nix ];
 
   home.file = {
-    ".config/swayosd/style.css".source = ./swayosd.css;
-    ".local/share/icons/bibata-sage".source = ./bibata-sage;
+    ".config/swayosd/style.css".source = ./files/swayosd.css;
+    ".local/share/icons/bibata-sage".source = ./files/bibata-sage;
+    ".config/dunst/dunstrc".source = ./files/dunstrc;
+    ".config/eww".source = ./files/eww;
+    ".config/waybar".source = ./files/waybar;
+  } // (generateEnvFiles emailShorthands);
+
+  home.sessionVariables = {
+    HYPRSHOT_DIR = screenshotDir;
   };
+
+  gtk.theme = "Adwaita:dark";
 
   home.packages = with pkgs; [
     hyprland-qtutils
@@ -27,35 +47,11 @@ in
     bemoji
     hyprcursor
     playerctl
+    dunst
+    eww
   ];
 
-  programs.fuzzel = {
-    enable = true;
-    settings = {
-      main = {
-        width = 50;
-        show-actions = true;
-      };
-      colors = {
-        text            = "EBDBB2FF";
-        match           = "EBDBB2FF";
-        selection-text  = "EBDBB2FF";
-        selection-match = "D79920FF";
-        background      = "00000055";
-        selection       = "7C8E76ff";
-        border          = "ffffff99";
-      };
-      border = {
-        width = 2;
-      };
-    };
-  };
-
-  services.swayosd = {
-    enable = true;
-    topMargin = 0.1;
-  };
-
+# HYPRLAND
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -184,6 +180,7 @@ in
     };
   };
 
+# HYPRPAPER
   services.hyprpaper = {
     enable = true;
     settings = {
@@ -201,7 +198,36 @@ in
     };
   };
 
-  home.sessionVariables = {
-    HYPRSHOT_DIR = screenshotDir;
+# WAYBAR
+  programs.waybar.enable = true;
+
+# FUZZEL
+  programs.fuzzel = {
+    enable = true;
+    settings = {
+      main = {
+        width = 50;
+        show-actions = true;
+      };
+      colors = {
+        text            = "EBDBB2FF";
+        match           = "EBDBB2FF";
+        selection-text  = "EBDBB2FF";
+        selection-match = "D79920FF";
+        background      = "00000055";
+        selection       = "7C8E76ff";
+        border          = "ffffff99";
+      };
+      border = {
+        width = 2;
+      };
+    };
+  };
+
+# SWAYOSD
+  services.swayosd = {
+    enable = true;
+    topMargin = 0.1;
   };
 }
+
