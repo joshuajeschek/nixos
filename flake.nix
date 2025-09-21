@@ -9,6 +9,9 @@
 
     zen-browser.url = "github:youwen5/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
@@ -23,6 +26,7 @@
 	          home-manager.useUserPackages = true;
 	          home-manager.users.main = import ./home.nix;
             home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
 	        }
         ];
       };

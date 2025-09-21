@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   wallpaper = pkgs.fetchurl {
     url = "https://cloud.jeschek.eu/s/6MJ6kZ3itQ5Ea73/download/rivendell.png";
     hash = "sha256-AE3wqoOKXyWsoeUFsVlYqTPDkqpAsQdk3k7qGAn0cmc=";
   };
-  screenshotDir = "/home/main/Pictures/Screenshots";
+  screenshotDir = "${config.home.homeDirectory}/Pictures/Screenshots";
   lr = layer: rules: builtins.map (rule: "${rule},${layer}") rules;
 in
 

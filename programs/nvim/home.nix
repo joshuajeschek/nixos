@@ -20,7 +20,7 @@
       ## general plugins
       vim-wakatime
       auto-pairs
-      project-nvim
+      # project-nvim # doesn't work right now
       mini-nvim
       editorconfig-nvim
       # copilot-vim
@@ -63,6 +63,7 @@
       virt-column-nvim
       vim-airline
       nvim-notify
+      transparent-nvim
     ];
   };
 }

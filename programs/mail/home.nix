@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
 
@@ -32,7 +32,7 @@ let
     local = {
       type = "filesystem";
       fileExt = ".vcf";
-      path = "/home/main/.contacts/nextcloud";
+      path = "${config.home.homeDirectory}/.contacts/nextcloud";
     };
     vdirsyncer.enable = true;
     khard.enable = true;
@@ -41,6 +41,11 @@ let
   debugNextcloud = pkgs.runCommand "pretty-json" {} ''
     echo '${builtins.toJSON nextcloud}' | ${pkgs.jq}/bin/jq '.' > $out
   '';
+
+  mailSecrets = builtins.listToAttrs (map (address: {
+    name = "mail/${address}";
+    value = { };
+  }) (builtins.attrNames accounts));
 
 in
 
@@ -59,6 +64,8 @@ in
   # accounts.contact.accounts.nextcloud = builtins.trace (builtins.readFile debugNextcloud) nextcloud;
   accounts.contact.accounts.nextcloud = nextcloud;
 
+  # EMAIL AND NEXTCLOUD PASSWORDS
+  sops.secrets = mailSecrets // (import ./../../private/_contacts.nix).nextcloudSops;
 
   home.packages = with pkgs; [
     pandoc
