@@ -14,8 +14,8 @@ let
   imports = [ ./pkgs.nix ]
     ++ getSimpleConfigs ./programs
     ++ getDirectoryConfigs ./programs
-    ++ getSimpleConfigs ./private
-    ++ getDirectoryConfigs ./private;
+    ++ getSimpleConfigs ../private
+    ++ getDirectoryConfigs ../private;
 
   importsAsString = builtins.concatStringsSep "\n  " (builtins.map builtins.toString imports);
 in

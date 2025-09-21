@@ -14,21 +14,29 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  let
+    mkSystemModules = hostname: [
+      ./configuration.nix
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.main = import ./home/${hostname}.nix;
+        home-manager.extraSpecialArgs = { inherit inputs hostname; };
+        home-manager.sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
+      }
+    ];
+  in
+  {
     nixosConfigurations = {
       terra = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-	        home-manager.nixosModules.home-manager
-	        {
-	          home-manager.useGlobalPkgs = true;
-	          home-manager.useUserPackages = true;
-	          home-manager.users.main = import ./home.nix;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
-	        }
-        ];
+        modules = mkSystemModules "terra";
+      };
+      spectre = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = mkSystemModules "spectre";
       };
     };
   };

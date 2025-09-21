@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  shorthands = (import ./../../private/_email.nix).shorthands;
+  shorthands = (import ../../../private/_email.nix).shorthands;
   generateEnvFiles = shorthands:
     builtins.listToAttrs (
       map (shorthand: {
