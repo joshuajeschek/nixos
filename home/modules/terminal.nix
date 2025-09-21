@@ -1,5 +1,11 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    tealdeer
+    bat
+    fx
+  ];
+
 # KITTY
   programs.kitty = lib.mkForce {
     enable = true;

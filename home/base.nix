@@ -11,9 +11,7 @@ let
       (builtins.filter (subdir: builtins.pathExists (dir + ("/" + subdir) + "/home.nix"))
         (builtins.attrNames (builtins.readDir dir)));
 
-  imports = [ ./pkgs.nix ]
-    ++ getSimpleConfigs ./modules
-    ++ getDirectoryConfigs ./modules;
+  imports = getSimpleConfigs ./modules ++ getDirectoryConfigs ./modules;
 
   importsAsString = builtins.concatStringsSep "\n  " (builtins.map builtins.toString imports);
 in

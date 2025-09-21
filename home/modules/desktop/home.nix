@@ -49,6 +49,9 @@ in
     playerctl
     dunst
     eww
+    pamixer
+    swaynotificationcenter
+    # pinentry-rofi ?
   ];
 
 # HYPRLAND

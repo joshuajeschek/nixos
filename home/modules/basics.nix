@@ -9,6 +9,26 @@
   home.packages = with pkgs; [
     sops
     git-graph
+    gnupg
+    neofetch
+    ddcutil
+    ddcui
+    unzip
+    ripgrep
+    isync
+    libnotify
+    jq
+    sshfs
+    libusb1
+    usbutils
+    appimage-run
+    imagemagick
+    poppler_utils
+    ffmpeg
+    speedtest-cli
+    exiftool
+    zip
+    # gcr ?
   ];
 
   services.clipman.enable = true;

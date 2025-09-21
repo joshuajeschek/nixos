@@ -1,6 +1,29 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
+    vesktop
+    signal-desktop
+    gimp
+    steam
+    baobab
+    spotify
+    inputs.zen-browser.packages.${pkgs.system}.default
+    stremio
+    libreoffice-still
+    vlc
+    evince
+    cheese
+    helvum
+    chromium
+    inkscape
+    qgis
+    zotero
+    eduvpn-client
+    kdePackages.okular
+    ausweisapp
+    postman
+    gparted
+    cemu
   ];
 
 # ZATHURA
