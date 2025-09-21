@@ -1,0 +1,275 @@
+// $bg: rgba(#000000, 30%);
+$bg: rgba(#000, 58%);
+$fg: #fff;
+$blue: #448488;
+$red: #cc231c;
+$purple: #b16185;
+$yellow: #d79920;
+$green: #989719;
+
+$border-radius: 12;
+
+.corner {
+  &.t.l {
+    border-radius: 100% 0 0 0;
+  }
+  &.t.r {
+    border-radius: 0 100% 0 0;
+  }
+  &.b.r {
+    border-radius: 0 0 100% 0;
+  }
+  &.b.l {
+    border-radius: 0 0 0 100%;
+  }
+  &.t {
+    border-top: 25px solid black;
+  }
+  &.b {
+    border-bottom: 25px solid black;
+  }
+  &.l {
+    border-left: 25px solid black;
+  }
+  &.r {
+    border-right: 25px solid black;
+  }
+}
+
+// .corner_inner {
+//   background: white;
+//   border-radius: 20px 0 0 0;
+// }
+
+* {
+  all: unset;
+  font-size: 15;
+  // font-family: CaskaydiaCove Nerd Font Mono;
+}
+
+.bar {
+  background: transparent;
+
+}
+
+.time {
+  font-family: CaskaydiaCove Nerd Font Mono;
+}
+
+.volume,
+.brightness,
+.clipboard,
+.media_preview,
+.media_summary,
+.time,
+.privacy,
+.audio,
+tooltip {
+  background: $bg;
+  border-radius: $border-radius;
+  padding: 0.5em 0.5em;
+}
+
+.audio-content {
+  padding: 1em;
+}
+.audio-control {
+  border-radius: $border-radius;
+  min-width: 1.5em;
+  min-height: 1.5em;
+  label {
+    font-size: 20;
+    font-family: CaskaydiaCove Nerd Font Mono;
+  }
+  &.active {
+    background-color: $blue;
+    color: $bg;
+  }
+}
+
+scale trough {
+  background-color: rgba($blue, 0.5);
+  min-height: 1.4em;
+  border-radius: $border-radius;
+  highlight {
+    border-radius: $border-radius;
+    background-color: $blue;
+  }
+}
+/* really stupid hack xd */
+scale.full trough {
+  background-color: $blue;
+}
+
+
+.time {
+  margin: 0 0.5em;
+}
+
+.privacy {
+  label {
+  font-size: 15;
+  }
+}
+.workspaces {
+  background: $bg;
+  border-radius: $border-radius;
+}
+.workspace {
+  label {
+    font-family: thewitcher, Arial, sans-serif;
+    font-size: 20;
+    padding: 0.2em 0;
+  }
+  border-radius: $border-radius;
+  label {
+    border-radius: $border-radius;
+  }
+  &:nth-child(1).occupied label {
+    color: $blue;
+  }
+  &:nth-child(2).occupied label {
+    color: $red;
+  }
+  &:nth-child(3).occupied label {
+    color: $purple;
+  }
+  &:nth-child(4).occupied label {
+    color: $yellow;
+  }
+  &:nth-child(5).occupied label {
+    color: $green;
+  }
+  &:nth-child(1) label {
+    color: rgba($blue, 0.4);
+  }
+  &:nth-child(2) label {
+    color: rgba($red, 0.4);
+  }
+  &:nth-child(3) label {
+    color: rgba($purple, 0.4);
+  }
+  &:nth-child(4) label {
+    color: rgba($yellow, 0.4);
+  }
+  &:nth-child(5) label {
+    color: rgba($green, 0.4);
+  }
+  &:nth-child(1).focused label {
+    color: $fg;
+    background: $blue;
+  }
+  &:nth-child(2).focused label {
+    color: $fg;
+    background: $red;
+  }
+  &:nth-child(3).focused label {
+    color: $fg;
+    background: $purple;
+  }
+  &:nth-child(4).focused label {
+    color: $fg;
+    background: $yellow;
+  }
+  &:nth-child(5).focused label {
+    color: $fg;
+    background: $green;
+  }
+  &.focused label {
+    color: $bg;
+    background: $fg;
+  }
+  &:nth-child(1).focused {
+    border: 4px solid $blue;
+    background: transparent;
+  }
+  &:nth-child(2).focused {
+    border: 4px solid $red;
+    background: transparent;
+  }
+  &:nth-child(3).focused {
+    border: 4px solid $purple;
+    background: transparent;
+  }
+  &:nth-child(4).focused {
+    border: 4px solid $yellow;
+    background: transparent;
+  }
+  &:nth-child(5).focused {
+    border: 4px solid $green;
+    background: transparent;
+  }
+  &.focused {
+    border: 4px solid white;
+    background: transparent;
+  }
+}
+
+.pill {
+  margin: 0 0 0 0.5em;
+  background: $bg;
+  border-radius: $border-radius;
+  .content {
+    padding: 0 0 0 0.5em;
+  }
+  .icon {
+    font-family: CaskaydiaCove Nerd Font Mono;
+    border-radius: $border-radius;
+    font-size: 25;
+  }
+}
+
+.media_art {
+  background-size: cover;
+  background-position: center;
+  border-radius: $border-radius;
+  margin: 0.5em;
+  padding: 2rem;
+}
+.media_art + .paused {
+  // filter: grayscale(100%);
+  // -gtl-recolor
+}
+.media_preview_text {
+  margin: 0.5em;
+}
+
+
+.vb > * {
+  margin: 10;
+  font-size: 18;
+}
+
+.vb-title {
+  font-size: 30;
+}
+
+.cb-item {
+  border: 1px solid rgba($fg, 30%);
+  border-radius: $border-radius;
+  margin: 4;
+  padding: 4;
+}
+
+.cb-text {
+  // overflow-wrap: anywhere;
+  // word-break: break-all;
+}
+
+.cb-empty {
+  color: rgba($fg, 30%);
+}
+
+.cb-event:hover > .cb-item {
+  background: $bg;
+}
+
+.cb-event > .cb-item > .cb-showhide >.cb-show {
+  color: transparent;
+}
+.cb-event:hover > .cb-item > .cb-showhide > .cb-hide {
+  color: transparent;
+}
+.cb-event:hover > .cb-item > .cb-showhide > .cb-show {
+  color: unset;
+}

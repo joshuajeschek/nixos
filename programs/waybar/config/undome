@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+DEVICE_MAC='FA:7F:A6:87:34:BB'
+STATUS=$(bluetoothctl info $DEVICE_MAC | grep "Connected" | awk '{print $2}')
+
+show() {
+  if [ "$STATUS" == "yes" ]; then
+    echo '​'
+  else
+    echo ''
+  fi
+}
+
+capacity() {
+  if [ "$STATUS" == "yes" ]; then
+    bluetoothctl info FA:7F:A6:87:34:BB | grep 'Battery Percentage' | awk '{print strtonum($3)"%"}'
+  else
+    echo ''
+  fi
+}
+
+icon() {
+  if [ "$STATUS" == "yes" ]; then
+    echo '󰌌'
+  else
+    echo ''
+  fi
+}
+
+
+case $1 in
+  icon)
+    icon
+    ;;
+  capacity)
+    capacity
+    ;;
+  show)
+    show
+    ;;
+  *)
+    echo "Usage: $0 {icon|capacity|show}"
+    exit 2
+    ;;
+esac

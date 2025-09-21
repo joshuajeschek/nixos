@@ -12,7 +12,25 @@
       experimental-features = nix-command flakes
     '';
   };
-  
+
+  nixpkgs.config = {
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-original"
+      "steam-unwrapped"
+      "steam-run"
+      "spotify"
+      "android-studio-stable"
+      "copilot.vim"
+      "stremio-shell"
+      "stremio-server"
+      "postman"
+    ];
+    permittedInsecurePackages = [
+      "qtwebengine-5.15.19"
+    ];
+  };
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -31,8 +49,8 @@
   services.blueman.enable = true;
 
   services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="1b8e", ATTRS{idProduct}=="c003", OWNER="josh", MODE="0666"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="1014", OWNER="josh", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="1b8e", ATTRS{idProduct}=="c003", OWNER="main", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="1014", OWNER="main", MODE="0666"
   '';
 
   virtualisation.docker = {
@@ -77,7 +95,7 @@
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-  services.xserver.displayManager.gdm =  {
+  services.displayManager.gdm =  {
     enable = true;
     wayland = true;
   };
@@ -146,7 +164,8 @@
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.josh = {
+  users.users.main = {
+    uid = 1000;
     initialPassword = "pw123";
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];

@@ -1,0 +1,6 @@
+[submodule "private"]
+	path = private
+	url = git@github.com:joshuajeschek/home-manager-private.git
+[submodule "programs/nvim/config"]
+	path = programs/nvim/config
+	url = git@github.com:joshuajeschek/nvim.git

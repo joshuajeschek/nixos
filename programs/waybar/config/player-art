@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+# Prefix for all stderr output
+prefix="[player-art]"
+
+# Create output directory if it doesn't exist
+mkdir -p /tmp/player-art 2>&1 >/dev/null
+
+# Function to process an image URL or file path
+process_image() {
+    art_url="$1"
+
+    # Skip if empty
+    if [ -z "$art_url" ]; then
+        echo "$prefix Empty art URL received" >&2
+        exit 1
+    fi
+
+    # Extract the filename from the URL/path
+    filename=$(basename "$art_url")
+    output_path="/tmp/player-art/$filename"
+
+    # Skip if output file already exists
+    if [ -f "$output_path" ]; then
+        echo "$prefix Skipping: output file already exists: $output_path" >&2
+        echo "$output_path"
+        exit 0
+    fi
+
+    echo "$prefix Processing: $art_url" >&2
+
+    # Create a temporary file for downloading if needed
+    temp_file=""
+
+    # Handle https URLs and file paths differently
+    if [[ "$art_url" == http* ]]; then
+        # For https URLs, download to a temp file
+        temp_file=$(mktemp)
+        if curl -s "$art_url" -o "$temp_file" 2>&1 >/dev/null; then
+            input_path="$temp_file"
+        else
+            echo "$prefix Failed to download: $art_url" >&2
+            rm -f "$temp_file" 2>&1 >/dev/null
+            exit 1
+        fi
+    else
+        # For file paths, use directly
+        # Remove 'file://' prefix if present
+        input_path="${art_url#file://}"
+
+        # Check if file exists
+        if [ ! -f "$input_path" ]; then
+            echo "$prefix File not found: $input_path" >&2
+            exit 1
+        fi
+    fi
+
+    # Process the image - crop square section from center, as large as possible
+    # Get dimensions of the image
+    dimensions=$(magick identify -format "%w %h" "$input_path" 2>&1)
+    width=$(echo $dimensions | cut -d' ' -f1)
+    height=$(echo $dimensions | cut -d' ' -f2)
+
+    # Calculate the size of the square crop (minimum of width and height)
+    if [ "$width" -lt "$height" ]; then
+        size=$width
+    else
+        size=$height
+    fi
+
+    # Use magick instead of convert with proper syntax
+    magick "$input_path" -gravity center -extent "${size}x${size}+0+0" "$output_path" 2>&1 >/dev/null
+
+    # Output only the path to stdout
+    echo "$output_path"
+
+    # Clean up temp file if we created one
+    if [ -n "$temp_file" ]; then
+        rm -f "$temp_file" 2>&1 >/dev/null
+    fi
+}
+
+# Run playerctl once and process the URL
+art_url=$(playerctl metadata --all-players --format '{{mpris:artUrl}}' | tail -1)
+playerctl status 2>&1 >/dev/null && process_image "$art_url" || echo ''

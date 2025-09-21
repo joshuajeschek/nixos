@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+
+count() {
+  source $HOME/.config/waybar-extra/$1.env
+  count_new=$(find $HOME/.local/share/mail/$ADDRESS/$2/new -type f | wc -l)
+  count_unseen=$(ls $HOME/.local/share/mail/$ADDRESS/$2/cur | awk -F, '$NF !~ /S/' | wc -l)
+  count=$(( $count_new + $count_unseen ))
+  if [ "$count" -eq 0 ]; then
+    echo ''
+  else
+    echo "$3 $count"
+  fi
+}
+
+count-all() {
+  s4dinbox=$(count s4d Inbox '')
+  s4dgitlab=$(count s4d gitlab '')
+  personalinbox=$(count personal Inbox '')
+  tuminbox=$(count tum Inbox '󰑴')
+  parts=()
+  [[ -n $s4dinbox ]] && parts+=("$s4dinbox")
+  [[ -n $s4dgitlab ]] && parts+=("$s4dgitlab")
+  [[ -n $personalinbox ]] && parts+=("$personalinbox")
+  [[ -n $tuminbox ]] && parts+=("$tuminbox")
+  text=$(IFS=" "; echo "${parts[*]}")
+  jq -n --unbuffered --compact-output \
+    --arg text "$text" \
+    '{text: $text}'
+  # touch -m $HOME/.config/waybar/style.css
+}
+
+show() {
+  if [ -n "$(count-all | jq --raw-output '.text')" ]; then
+    echo '​'
+  else
+    echo ''
+  fi
+  # touch -m $HOME/.config/waybar/style.css
+}
+
+icon() {
+  if [ -n "$(count-all | jq --raw-output '.text')" ]; then
+    echo '󰇮'
+  else
+    echo ''
+  fi
+  # touch -m $HOME/.config/waybar/style.css
+}
+
+case $1 in
+  count)
+    count $2 $3 $4
+    ;;
+  count-all)
+    count-all
+    ;;
+  show)
+    show
+    ;;
+  icon)
+    icon
+    ;;
+  *)
+    echo "Usage: $0 {count|count-all|show} [shorthand] [mailbox] [icon]"
+    exit 1
+    ;;
+esac
+
+# touch -m $HOME/.config/waybar/style.css

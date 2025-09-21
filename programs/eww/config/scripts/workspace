@@ -1,0 +1,100 @@
+#! /bin/bash
+
+declare -A OCCUPIED
+OCCUPIED[1]='false'
+OCCUPIED[2]='false'
+OCCUPIED[3]='false'
+OCCUPIED[4]='false'
+OCCUPIED[5]='false'
+OCCUPIED[6]='false'
+OCCUPIED[7]='false'
+OCCUPIED[8]='false'
+OCCUPIED[9]='false'
+
+workspaces() {
+  if [[ ${1:0:9} == "workspace" ]] && [[ ${1:11} != "special" ]]; then #set focused workspace
+    num=${1:11}
+    export focused=$num
+
+  elif [[ ${1:0:10} == "focusedmon" ]]; then #set focused workspace following monitor focus change
+    string=${1:12}
+    num=${string##*,}
+    export mon=${string/,*/}
+    OCCUPIED[$num]="true"
+    export focused=$num
+
+  elif [[ ${1:0:13} == "moveworkspace" ]] && [[ ${1##*,} == "$mon" ]]; then #Set focused workspace following swapactiveworkspace
+    string=${1:15}
+    num=${string/,*/}
+    export focused=$num
+
+  elif [[ ${1:0:15} == "createworkspace" ]]; then #set Occupied workspace
+    num=${1:17}
+    OCCUPIED[$num]='true'
+
+  elif [[ ${1:0:16} == "destroyworkspace" ]]; then #unset unoccupied workspace
+    num=${1:18}
+    OCCUPIED[$num]='false'
+  fi
+}
+
+clients() {
+  clients=`hyprctl clients -j | jq -r ".[] | select(.workspace.id == $1) | (.class | ascii_downcase) + \"\t\" + .title"`
+  classes=$(awk -F'\t' '{ print $1 }' <<< $clients | sort | uniq)
+  declare -A icons
+  for class in $classes; do
+    icons[$class]=`$HOME/.local/bin/get-icon $class`
+  done
+  if [ -z "$clients" ]; then return; fi
+  clients=$(awk -F'\t' '{ print "(client :title \"" $2 "\" :icon \"ICON::"$1"\")"}' <<< $clients)
+  for class in "${!icons[@]}"; do
+    icon=${icons[$class]//\//\\/}
+    clients=$(sed "s/ICON::$class/$icon/g" <<< $clients)
+  done
+  clients=$(tr -s '\n' ' ' <<< $clients)
+  clients=$(sed 's/"/\"/g' <<< "$clients")
+  eww update clients$1="(box :class 'clients' :spacing 10 $clients)"
+}
+
+update() {
+  occupied='[false'
+  for ((i=1;i<10;i++)); do
+    clients $i &
+    occupied="$occupied, ${OCCUPIED[$i]}"
+  done
+  occupied="$occupied]"
+  eww update workspace_occupied="$occupied"
+  echo $focused
+}
+
+watch() {
+  #initial check for occupied workspaces
+  for num in $(hyprctl workspaces | grep ID | awk '{print $3}'); do OCCUPIED[$num]='true'; done
+
+  #initial check for focused workspace
+  for num in $(hyprctl monitors | grep -B 4 "focused: yes" | awk 'NR==1{print $3}'); do
+    export mon=$(hyprctl monitors | grep -B 2 "\($num\)" | awk 'NR==1{print $2}')
+    export focused=$num
+  done
+
+  update
+
+  socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r event; do
+  workspaces "$event"
+  update
+  done
+}
+
+hover() {
+  res='[false'
+  for ((i=1;i<10;i++)); do
+    [[ "$i" -eq "$1" ]] && res="$res, true" || res="$res, false"
+  done
+  res="$res]"
+  eww update workspace_hover="$res"
+}
+
+case "$1" in
+  watch) watch;;
+  hover) hover $2;;
+esac
