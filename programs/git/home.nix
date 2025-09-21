@@ -21,7 +21,7 @@
     };
     ignores = [
       ".direnv/"
-      "shell.nix"
+      # "shell.nix"
     ];
     includes = [
       {
