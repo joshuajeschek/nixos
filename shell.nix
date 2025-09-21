@@ -6,7 +6,7 @@ let
   scriptData = {
     rebuild = ''
       [ -n "$NIXOS_ROOT" ] && cd $NIXOS_ROOT
-      sudo nixos-rebuild --flake path:.#terra "$@"
+      sudo nixos-rebuild --flake path:.#$HOST "$@"
     '';
   };
   scripts = map (name: mkScript name scriptData.${name}) (builtins.attrNames scriptData);
