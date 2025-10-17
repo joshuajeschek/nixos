@@ -58,19 +58,6 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      workspace = [
-        "1, monitor:DP-1, default:true"
-        "2, monitor:DP-1, default:true"
-        "3, monitor:DP-1, default:true"
-        "4, monitor:DP-1, default:true"
-        "5, monitor:DP-1, default:true"
-        "6, monitor:HDMI-A-1, default:true"
-        "7, monitor:HDMI-A-1, default:true"
-        "8, monitor:HDMI-A-1, default:true"
-        "9, monitor:HDMI-A-2, default:true"
-        "6, vesktop"
-        "9, stremio"
-      ];
       monitor = [
         "HDMI-A-1, 1920x1080@60,  -1080x-250, 1, transform,1"
         "DP-1,     3440x1440@100, 0x0,        1"
@@ -79,6 +66,8 @@ in
         # landscape second screen
         # "HDMI-A-1,1920x1080@60,0x0,1"
         # "DP-1,3440x1440@100,1920x250,1"
+        "eDP-1, 3840x2160@60,  0x0,  2"
+        # ",preferred"
       ];
       env = [
         "GTK_THEME,Adwaita:dark"
@@ -98,6 +87,7 @@ in
         kb_options = "caps:escape";
         follow_mouse = 2;
         sensitivity = -0.2;
+        touchpad.natural_scroll = true;
       };
       general = {
         gaps_in = 5;
@@ -197,6 +187,8 @@ in
         "HDMI-A-2,${builtins.toString wallpaper}"
         "DP-1,${builtins.toString wallpaper}"
         "DP-2,${builtins.toString wallpaper}"
+        "DP-3,${builtins.toString wallpaper}"
+        "eDP-1,${builtins.toString wallpaper}"
       ];
     };
   };

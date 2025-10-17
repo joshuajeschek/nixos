@@ -1,5 +1,5 @@
 {
-  "output": "DP-1",
+  "output": "eDP-1",
   "include": [
     "$HOME/.config/waybar/modules.jsonc",
     "$HOME/.config/waybar/custom.jsonc",
@@ -33,10 +33,10 @@
     // "custom/brightness#c34",
     "custom/undome",
     "custom/icon-left#undome",
-    "custom/undome-icon#icon"
-    //"custom/battery",
-    //"custom/icon-left#battery",
-    //"custom/battery-icon#icon"
+    "custom/undome-icon#icon",
+    "custom/battery",
+    "custom/icon-left#battery",
+    "custom/battery-icon#icon"
   ],
   "group/system": {
     "orientation": "inherit",

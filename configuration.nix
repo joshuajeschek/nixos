@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
 
@@ -70,12 +70,19 @@
     efiSupport = true;
   };
 
-  networking.hostName = "terra"; # Define your hostname.
+  sops = {
+    defaultSopsFile = "${inputs.private}/secrets.yaml";
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/main/.config/sops/age/keys.txt";
+  };
+
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-  # networking.extraHosts = ''
-  # '';
+  networking.wireless.iwd.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
+  sops.secrets."networks/eduroam" = { path = "/var/lib/iwd/eduroam.8021x"; };
+  sops.secrets."networks/eduroam-cert" = { path = "/var/lib/iwd/eduroam.pem"; };
 
   # Set your time zone.
   time = {
@@ -216,7 +223,14 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.fail2ban.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      AllowUsers = [ "main" ];
+    };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -247,6 +261,15 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.05"; # Did you read the comment?
-
+  # not for networkmanager (but for wpa_supplicant)
+  #  networking.wireless.networks.eduroam = {
+  #   auth = ''
+  #     key_mgmt=WPA-EAP
+  #     eap=PWD
+  #     phase2="auth=MSCHAPV2"
+  #     identity="go49hag@eduroam.mwn.de"
+  #     password="M6s%xq*z$QeVC!qQ@NN*"
+  #   '';
+  # };
 }
 

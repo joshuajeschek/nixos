@@ -52,6 +52,9 @@
 	      # workspace (scroll)
         "$mod, mouse_down, workspace, e+1"
         "$mod, mouse_up, workspace, e-1"
+        # hardware
+        ", XF86MonBrightnessUp, exec, brightnessctl s +10%"
+        ", XF86MonBrightnessDown, exec, brightnessctl s 10%-"
       ]
       ++ ( # workspaces
         builtins.concatLists (builtins.genList (i:

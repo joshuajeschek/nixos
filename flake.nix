@@ -17,10 +17,14 @@
     private.flake = false;
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, sops-nix, ... }:
   let
     mkSystemModules = hostname: [
       ./configuration.nix
+      sops-nix.nixosModules.sops
+      {
+        networking.hostName = hostname;
+      }
       home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
@@ -35,10 +39,12 @@
     nixosConfigurations = {
       terra = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = mkSystemModules "terra";
       };
       spectre = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = mkSystemModules "spectre";
       };
     };

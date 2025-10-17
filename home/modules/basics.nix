@@ -28,6 +28,7 @@
     speedtest-cli
     exiftool
     zip
+    nix-diff
     # gcr ?
   ];
 

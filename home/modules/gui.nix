@@ -8,7 +8,7 @@
     baobab
     spotify
     inputs.zen-browser.packages.${pkgs.system}.default
-    stremio
+    # stremio
     libreoffice-still
     vlc
     evince
