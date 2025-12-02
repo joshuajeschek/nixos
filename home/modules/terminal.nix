@@ -1,4 +1,12 @@
 { lib, pkgs, ... }:
+let
+  zsh-wakatime = pkgs.fetchFromGitHub {
+    owner = "wbingli";
+    repo = "zsh-wakatime";
+    rev = "98a877680cbf4a2360df7fa0ffc38b6f2b5cd1a0";
+    sha256 = "sha256-iMHPDz4QvaL3YdRd3vaaz1G4bj8ftRVD9cD0KyJVeAs=";
+  };
+in
 {
   home.packages = with pkgs; [
     tealdeer
@@ -75,6 +83,9 @@
       plugins = [ "git" ];
       theme = "agnoster";
     };
+    initContent = ''
+      source ${zsh-wakatime}/zsh-wakatime.plugin.zsh;
+    '';
     shellAliases = {
       h = "history";
       please = "sudo";

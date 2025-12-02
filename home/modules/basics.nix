@@ -58,6 +58,7 @@
       graph = "log --graph --oneline";
       sync = "! git add . && git commit -m 'sync' && git pull --rebase && git push";
       shash = "rev-parse --short=9";
+      copy-commit = "!f() { git --git-dir=\"$1/.git\" format-patch -k -1 --stdout \"$2\" | git am -3 -k; }; f"; # copy the commit $2 from the repo $1 to the current repo - https://stackoverflow.com/a/9507417
     };
     ignores = [
       ".direnv/"

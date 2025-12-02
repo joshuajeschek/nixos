@@ -25,6 +25,7 @@
       "stremio-shell"
       "stremio-server"
       "postman"
+      "vscode"
     ];
     permittedInsecurePackages = [
       "qtwebengine-5.15.19"
@@ -102,10 +103,10 @@
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-  services.displayManager.gdm =  {
-    enable = true;
-    wayland = true;
-  };
+  # services.displayManager.gdm =  {
+  #   enable = true;
+  #   wayland = true;
+  # };
 
   security.rtkit.enable = true;
   # services.gnome3.gnome-keyring.enable = true;

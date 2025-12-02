@@ -54,12 +54,13 @@
   "custom/reboot-linux": {
     "format": "",
     "tooltip-format": "Reboot",
-    "on-click": "reboot-linux"
+    "on-click": "test $HOST = terra && reboot-linux || reboot"
   },
   "custom/reboot-windows": {
     "format": "",
     "tooltip-format": "Reboot into Windows",
-    "on-click": "reboot-windows"
+    "on-click": "reboot-windows",
+    "exec-if": "test $HOST = terra"
   },
   "custom/mail": {
     "format": "{}",

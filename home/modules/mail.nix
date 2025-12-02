@@ -79,6 +79,7 @@ in
       compose = {
         editor = "nvim";
         address-book-cmd = "khard email --remove-first-line --parsable %s";
+        reply-to-self = false;
       };
       filters = {
         "text/plain" = "colorize";

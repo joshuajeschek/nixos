@@ -24,6 +24,9 @@
     postman
     gparted
     cemu
+    gnucash
+    anki-bin
+    obs-studio
   ];
 
 # ZATHURA

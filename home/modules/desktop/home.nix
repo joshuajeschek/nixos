@@ -38,6 +38,7 @@ in
   gtk.theme = "Adwaita:dark";
 
   home.packages = with pkgs; [
+    egl-wayland
     hyprland-qtutils
     wl-clipboard
     hyprpicker
@@ -67,7 +68,13 @@ in
         # "HDMI-A-1,1920x1080@60,0x0,1"
         # "DP-1,3440x1440@100,1920x250,1"
         "eDP-1, 3840x2160@60,  0x0,  2"
-        # ",preferred"
+        "desc:Lenovo Group Limited T32p-30 V30B4THP, preferred, auto-center-up, 1.25"
+        "desc:Lenovo Group Limited T32p-30 V30B4P63, preferred, auto-center-up, 1.25"
+        "desc:Lenovo Group Limited T27hv-30 VTV0UF32, preferred, auto-center-up, 1"
+        "desc:Lenovo Group Limited T27hv-30 VTV0UF44, preferred, auto-center-up, 1"
+        "desc:Lenovo Group Limited T27hv-30 VTV0UF3N, preferred, auto-center-up, 1"
+        # "DP-2, preferred, auto,2"
+        # ",preferred,auto,1"
       ];
       env = [
         "GTK_THEME,Adwaita:dark"
@@ -75,6 +82,8 @@ in
         "HYPRCURSOR_SIZE,20"
         "XCURSOR_THEME,bibata-sage"
         "XCURSOR_SIZE,20"
+        "LIBVA_DRIVER_NAME,nvidia"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       ];
       exec-once = [
         "~/.config/eww/scripts/init"
