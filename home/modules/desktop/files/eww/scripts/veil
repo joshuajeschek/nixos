@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+PIDFILE="/tmp/veil.pid"
+last_active=''
+
+veil() {
+  if [[ $1 = "0" ]]; then
+    [[ $2 = true ]] && eww open veil_main
+    [[ $2 = false ]] && eww close veil_main
+  elif [[ $1 = "1" ]]; then
+    [[ $2 = true ]] && eww open veil_secondary
+    [[ $2 = false ]] && eww close veil_secondary
+  fi
+}
+
+startup() {
+  if [ -f "$PIDFILE" ]; then
+    echo "PID file exists. Is the script already running?"
+    exit 1
+  fi
+  echo $$ > "$PIDFILE"
+
+  last_active=$(hyprctl activeworkspace -j | jq ".monitorID")
+  veil "0" true
+  veil "1" true
+  veil $last_active false
+}
+
+shutdown() {
+  rm -f "$PIDFILE"
+  veil "0" false
+  veil "1" false
+  exit 0
+}
+
+trap shutdown SIGTERM SIGINT
+startup
+
+while true; do
+  active=$(hyprctl activeworkspace -j | jq ".monitorID")
+  if [[ $last_active != $active ]]; then
+    veil $last_active true
+    veil $active false
+  fi
+  last_active=$active
+  sleep 0.1
+done
+
+

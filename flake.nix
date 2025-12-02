@@ -15,12 +15,20 @@
 
     private.url = "path:./private";
     private.flake = false;
+
+    elephant.url = "github:abenz1267/elephant";
+    elephant.inputs.nixpkgs.follows = "nixpkgs";
+    walker.url = "github:abenz1267/walker";
+    walker.inputs.elephant.follows = "elephant";
+    walker.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, sops-nix, ... }:
   let
     mkSystemModules = hostname: [
-      ./configuration.nix
+      ./system/${hostname}.nix
       sops-nix.nixosModules.sops
       {
         networking.hostName = hostname;
@@ -31,7 +39,11 @@
         home-manager.useUserPackages = true;
         home-manager.users.main = import ./home/${hostname}.nix;
         home-manager.extraSpecialArgs = { inherit inputs hostname; };
-        home-manager.sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
+        home-manager.sharedModules = [
+          inputs.sops-nix.homeManagerModules.sops
+          inputs.walker.homeManagerModules.default
+          inputs.nix-flatpak.homeManagerModules.nix-flatpak
+        ];
       }
     ];
   in

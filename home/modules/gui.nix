@@ -7,6 +7,7 @@
     steam
     baobab
     spotify
+    tidal-hifi
     inputs.zen-browser.packages.${pkgs.system}.default
     # stremio
     libreoffice-still
@@ -28,6 +29,14 @@
     anki-bin
     obs-studio
   ];
+
+  xdg.mimeApps.defaultApplications = {
+    "text/html" = [ "zen.desktop" ];
+    "x-scheme-handler/http" = [ "zen.desktop" ];
+    "x-scheme-handler/https" = [ "zen.desktop" ];
+    "x-scheme-handler/about" = [ "zen.desktop" ];
+    "x-scheme-handler/unknown" = [ "zen.desktop" ];
+  };
 
 # ZATHURA
   programs.zathura = {

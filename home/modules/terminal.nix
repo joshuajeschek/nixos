@@ -12,6 +12,7 @@ in
     tealdeer
     bat
     fx
+    glow
   ];
 
 # KITTY

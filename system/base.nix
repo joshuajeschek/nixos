@@ -33,10 +33,6 @@
     ];
   };
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
   hardware.i2c.enable = true;
   hardware.bluetooth = {
     enable = true;
@@ -101,13 +97,6 @@
   console = {
     useXkbConfig = true;
   };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-  # services.displayManager.gdm =  {
-  #   enable = true;
-  #   wayland = true;
-  # };
 
   security.rtkit.enable = true;
   # services.gnome3.gnome-keyring.enable = true;

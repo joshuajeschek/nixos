@@ -23,18 +23,30 @@
     usbutils
     appimage-run
     imagemagick
-    poppler_utils
+    poppler-utils
     ffmpeg
     speedtest-cli
     exiftool
+    file
     zip
     nix-diff
     # gcr ?
+    radeontop
+    # flatpak
   ];
 
+  xdg.mimeApps.enable = true; # actual applications are defined in modules
   services.clipman.enable = true;
   services.gnome-keyring.enable = true;
   programs.ssh.enable = true;
+
+  services.flatpak = {
+    enable = true;
+    update.onActivation = true;
+    packages = [
+      "com.stremio.Stremio"
+    ];
+  };
 
 # BTOP
   programs.btop = {
@@ -47,18 +59,22 @@
 # GIT
   programs.git = {
     enable = true;
-    userName = "Joshua Jeschek";
-    userEmail = "dev@jeschek.eu";
-    aliases = {
-      tree = "! git ls-tree -r --name-only HEAD | tree --fromfile";
-      amend = "commit --amend --no-edit";
-      change-commits = "\"!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f\"";
-      kdiff = "difftool --no-symlinks --dir-diff";
-      fpush = "push --force-with-lease --force-if-includes";
-      graph = "log --graph --oneline";
-      sync = "! git add . && git commit -m 'sync' && git pull --rebase && git push";
-      shash = "rev-parse --short=9";
-      copy-commit = "!f() { git --git-dir=\"$1/.git\" format-patch -k -1 --stdout \"$2\" | git am -3 -k; }; f"; # copy the commit $2 from the repo $1 to the current repo - https://stackoverflow.com/a/9507417
+    settings = {
+      user = {
+        name = "Joshua Jeschek";
+        email = "dev@jeschek.eu";
+      };
+      alias = {
+        tree = "! git ls-tree -r --name-only HEAD | tree --fromfile";
+        amend = "commit --amend --no-edit";
+        change-commits = "\"!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f\"";
+        kdiff = "difftool --no-symlinks --dir-diff";
+        fpush = "push --force-with-lease --force-if-includes";
+        graph = "log --graph --oneline";
+        sync = "! git add . && git commit -m 'sync' && git pull --rebase && git push";
+        shash = "rev-parse --short=9";
+        copy-commit = "!f() { git --git-dir=\"$1/.git\" format-patch -k -1 --stdout \"$2\" | git am -3 -k; }; f"; # copy the commit $2 from the repo $1 to the current repo - https://stackoverflow.com/a/9507417
+      };
     };
     ignores = [
       ".direnv/"

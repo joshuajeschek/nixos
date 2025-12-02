@@ -21,7 +21,7 @@ let
 in
 
 {
-  imports = [ ./binds.nix ];
+  imports = [ ./binds.nix ./walker.nix ./icons.nix ];
 
   home.file = {
     ".config/swayosd/style.css".source = ./files/swayosd.css;
@@ -52,6 +52,8 @@ in
     eww
     pamixer
     swaynotificationcenter
+    xdg-desktop-portal-hyprland
+    # walker
     # pinentry-rofi ?
   ];
 
@@ -89,6 +91,7 @@ in
         "~/.config/eww/scripts/init"
         "waybar"
         "wl-paste --watch 'clipman store --max-items=0'"
+        "zen"
       ];
       input = {
         kb_layout = "de";
@@ -165,6 +168,7 @@ in
       };
       layerrule =
         (lr "launcher" ["blur" "ignorezero" "dimaround" "xray 1"])
+        ++ (lr "walker" ["blur" "ignorezero" "dimaround" "xray 1"])
         ++ (lr "waybar" ["blur" "ignorezero" "ignorealpha 0.3"])
         ++ (lr "notifications" ["blur" "ignorezero"])
         ++ (lr "swayosd" ["blur" "ignorezero"])
@@ -234,4 +238,3 @@ in
     topMargin = 0.1;
   };
 }
-

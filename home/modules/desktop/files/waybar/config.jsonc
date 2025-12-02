@@ -1,5 +1,5 @@
 {
-  "output": "eDP-1",
+  "output": ["eDP-1", "DP-1"],
   "include": [
     "$HOME/.config/waybar/modules.jsonc",
     "$HOME/.config/waybar/custom.jsonc",
@@ -34,6 +34,9 @@
     "custom/undome",
     "custom/icon-left#undome",
     "custom/undome-icon#icon",
+    "group/quicksettings",
+    "custom/icon-left#quicksettings",
+    "custom/quicksettings-icon#icon",
     "custom/battery",
     "custom/icon-left#battery",
     "custom/battery-icon#icon"
@@ -69,6 +72,12 @@
       "custom/player-position",
       "image#player-art",
       "custom/player-title"
+    ]
+  },
+  "group/quicksettings": {
+    "orientation": "inherit",
+    "modules": [
+      "custom/veil"
     ]
   },
   "reload_style_on_change": true,

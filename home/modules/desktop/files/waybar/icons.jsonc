@@ -44,5 +44,11 @@
   "custom/backlight-icon#icon": {
     "format": "󰃠",
     "on-click": ""
+  },
+  "custom/icon-left#quicksettings": {
+    "format": "​"
+  },
+  "custom/quicksettings-icon#icon": {
+    "format": ""
   }
 }

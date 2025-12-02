@@ -10,4 +10,5 @@ eww daemon
 # pkill -f "python $HOME/.config/eww/scripts/media"
 # $HOME/.config/eww/scripts/mediaserver &
 eww open-many corner_tl corner_tr corner_bl corner_br
+rm /tmp/veil.pid
 # (sleep 10 && eww update volume="$($HOME/.config/eww/scripts/volume get)") &

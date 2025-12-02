@@ -48,7 +48,7 @@
   },
   "custom/shutdown": {
     "format": "",
-    "tooltip-format": "Shutdown",
+    "tooltip-format": "Shut It DOWN 🙅",
     "on-click": "shutdown -h now"
   },
   "custom/reboot-linux": {
@@ -96,6 +96,11 @@
     "format": "{}",
     "exec": "$HOME/.config/waybar/player-position.sh",
     "interval": 1
+  },
+  "custom/veil": {
+    "format": "{}",
+    "exec": "$HOME/.config/waybar/quicksetting.sh veil",
+    "on-click": "test -f /tmp/veil.pid && kill $(cat /tmp/veil.pid) || $HOME/.config/eww/scripts/veil"
   }
   // "custom/brightness": {
   //   "format": "{icon} {percentage}%",

@@ -12,7 +12,12 @@
     python312Packages.jedi-language-server
     ruff
     clang-tools
-    nodePackages_latest.vscode-json-languageserver
+    # nodePackages_latest.vscode-json-languageserver
+    # html
+    emmet-ls
+    vscode-langservers-extracted
+    nodePackages_latest.typescript-language-server
+    djlint
   ];
   programs.neovim = {
     enable = true;

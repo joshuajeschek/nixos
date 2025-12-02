@@ -1,0 +1,28 @@
+(defwindow veil_main
+  :monitor 0
+  :stacking 'fg'
+  :wm-ignore true
+  :geometry (geometry
+    :x '0'
+    :y '-50px'
+    :width '3440px'
+    :height '1440px'
+    :anchor 'top left'
+  )
+  (box :class 'black')
+)
+
+(defwindow veil_secondary
+  :monitor 1
+  :stacking 'overlay'
+  :wm-ignore true
+  :geometry (geometry
+    :x '0'
+    :y '0'
+    :width '1080px'
+    :height '1920px'
+    :anchor 'top left'
+  )
+  (box :class 'black')
+)
+

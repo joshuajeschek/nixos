@@ -4,6 +4,7 @@
 (include 'media.yuck')
 (include 'audio.yuck')
 (include 'corners.yuck')
+(include 'veil.yuck')
 ; ===============
 ;   GLOBAL VARS
 ; ===============
