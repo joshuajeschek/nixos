@@ -4,6 +4,16 @@
 
 { config, lib, pkgs, inputs, ... }:
 
+let
+  # Import network mappings from private repo
+  networkMappings = import "${inputs.private}/_networks.nix";
+
+  # Generate sops secrets for WPA2 networks
+  wpa2Secrets = builtins.mapAttrs (sopsKey: ssid: {
+    path = "/var/lib/iwd/${ssid}.psk";
+  }) networkMappings.wpa2Networks;
+in
+
 {
 
   nix = {
@@ -79,8 +89,14 @@
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.wireless.iwd.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
-  sops.secrets."networks/eduroam" = { path = "/var/lib/iwd/eduroam.8021x"; };
-  sops.secrets."networks/eduroam-cert" = { path = "/var/lib/iwd/eduroam.pem"; };
+
+  sops.secrets = {
+    "networks/eduroam" = { path = "/var/lib/iwd/eduroam.8021x"; };
+    "networks/eduroam-cert" = { path = "/var/lib/iwd/eduroam.pem"; };
+  } // (lib.mapAttrs' (k: v: {
+    name = "networks/${k}";
+    value = v;
+  }) wpa2Secrets);
 
   # Set your time zone.
   time = {
@@ -137,7 +153,7 @@
       };
     };
   };
-  
+
 
   # Configure keymap in X11
   services.xserver.xkb.layout = "de";
@@ -169,7 +185,7 @@
     extraGroups = [ "wheel" "docker" "i2c" ];
     shell = pkgs.zsh;
   };
-    
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -264,4 +280,3 @@
   #   '';
   # };
 }
-
