@@ -8,6 +8,7 @@
   ],
   "modules-left": [
     "hyprland/workspaces",
+    "niri/workspaces",
     "custom/idasen",
     "privacy",
     "group/player"

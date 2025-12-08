@@ -75,12 +75,14 @@ button {
 #workspaces button:nth-child(1) {
   margin: 0;
 }
-#workspaces button.active {
+/* #workspaces button.active { hyprland */
+#workspaces button.focused { /* niri */
     color: white;
     background: @primary;
     box-shadow: unset;
 }
-#workspaces button.empty:not(.active) {
+/* #workspaces button.empty:not(.active) { hyprland */
+#workspaces button.empty:not(.focused) { /* niri */
   color: @primary;
 }
 #workspaces button.urgent {
@@ -202,7 +204,8 @@ label:disabled {
   padding-right: 5px;
 }
 
-.active {
+/* .active { hyprland */
+.focused { /* niri */
   color: @active;
 }
 .inactive {

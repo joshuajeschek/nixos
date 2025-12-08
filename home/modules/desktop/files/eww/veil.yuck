@@ -1,5 +1,5 @@
 (defwindow veil_main
-  :monitor 0
+  :monitor '["C34J79x", 1]'
   :stacking 'fg'
   :wm-ignore true
   :geometry (geometry
@@ -13,7 +13,7 @@
 )
 
 (defwindow veil_secondary
-  :monitor 1
+  :monitor '["T24i-10", 0]'
   :stacking 'overlay'
   :wm-ignore true
   :geometry (geometry

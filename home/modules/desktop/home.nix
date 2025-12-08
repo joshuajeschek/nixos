@@ -29,6 +29,7 @@ in
     ".config/dunst/dunstrc".source = ./files/dunstrc;
     ".config/eww".source = ./files/eww;
     ".config/waybar".source = ./files/waybar;
+    # ".config/niri/config.kdl".source = ./files/niri.kdl;
   } // (generateEnvFiles emailShorthands);
 
   home.sessionVariables = {
@@ -53,6 +54,8 @@ in
     pamixer
     swaynotificationcenter
     xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gnome
+    xwayland-satellite
     # walker
     # pinentry-rofi ?
   ];
@@ -90,7 +93,7 @@ in
       exec-once = [
         "~/.config/eww/scripts/init"
         "waybar"
-        "wl-paste --watch 'clipman store --max-items=0'"
+        # "wl-paste --watch 'clipman store --max-items=0'"
         "zen"
       ];
       input = {

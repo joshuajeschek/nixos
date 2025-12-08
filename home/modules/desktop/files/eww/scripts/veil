@@ -3,11 +3,15 @@
 PIDFILE="/tmp/veil.pid"
 last_active=''
 
+M0="Samsung Electric Company C34J79x H4ZN501861"
+M1="Lenovo Group Limited T24i-10 VT518162"
+
 veil() {
-  if [[ $1 = "0" ]]; then
+  # echo "1: $1 - 2: $2"
+  if [[ $1 = $M0 ]]; then
     [[ $2 = true ]] && eww open veil_main
     [[ $2 = false ]] && eww close veil_main
-  elif [[ $1 = "1" ]]; then
+  elif [[ $1 = $M1 ]]; then
     [[ $2 = true ]] && eww open veil_secondary
     [[ $2 = false ]] && eww close veil_secondary
   fi
@@ -20,16 +24,17 @@ startup() {
   fi
   echo $$ > "$PIDFILE"
 
-  last_active=$(hyprctl activeworkspace -j | jq ".monitorID")
-  veil "0" true
-  veil "1" true
-  veil $last_active false
+  # last_active=$(hyprctl activeworkspace -j | jq ".monitorID") # hyprland
+  last_active=$(niri msg -j focused-output | jq -r '.make + " " + .model + " " + .serial') # niri
+  veil "$M0" true
+  veil "$M1" true
+  veil "$last_active" false
 }
 
 shutdown() {
   rm -f "$PIDFILE"
-  veil "0" false
-  veil "1" false
+  veil "$M0" false
+  veil "$M1" false
   exit 0
 }
 
@@ -37,10 +42,12 @@ trap shutdown SIGTERM SIGINT
 startup
 
 while true; do
-  active=$(hyprctl activeworkspace -j | jq ".monitorID")
+  # active=$(hyprctl activeworkspace -j | jq ".monitorID") # hyprland
+  active=$(niri msg -j focused-output | jq -r '.make + " " + .model + " " + .serial') # niri
+  # echo "$last_active -> $active"
   if [[ $last_active != $active ]]; then
-    veil $last_active true
-    veil $active false
+    veil "$last_active" true
+    veil "$active" false
   fi
   last_active=$active
   sleep 0.1

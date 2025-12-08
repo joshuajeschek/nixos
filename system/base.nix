@@ -176,6 +176,7 @@ in
   # services.libinput.enable = true;
 
   programs.hyprland.enable = true;
+  programs.niri.enable = true;
   programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.main = {
@@ -196,10 +197,8 @@ in
     pavucontrol
     tree
     git
-    hyprland
+    # hyprland
     xdg-utils
-    # xdg-desktop-portal
-    # xdg-desktop-portal-hyprland
     grim
     slurp
     pipewire
@@ -215,7 +214,28 @@ in
     # xdgOpenUsePortal = true;
     config = {
       common.default = ["gtk"];
-      hyprland.default = ["gtk" "hyprland"];
+      hyprland.default = ["hyprland" "gtk"];
+      # niri.default = ["gnome"];
+      niri = {
+        default = ["gnome" "gtk"];
+        "org.freedesktop.impl.portal.Access" = ["gtk"];
+        "org.freedesktop.impl.portal.Notification" = ["gtk"];
+        "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+      };
+    };
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
+    ];
+  };
+
+  # this is a workaround
+  systemd.user.services.xdg-desktop-portal = {
+    environment = {
+      NIX_XDG_DESKTOP_PORTAL_DIR = "/run/current-system/sw/share/xdg-desktop-portal/portals";
     };
   };
 

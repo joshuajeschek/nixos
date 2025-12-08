@@ -7,6 +7,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # niri.url = "github:sodiboo/niri-flake";
+    # niri.inputs.nixpkgs.follows = "nixpkgs";
+
     zen-browser.url = "github:youwen5/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -40,6 +43,7 @@
         home-manager.users.main = import ./home/${hostname}.nix;
         home-manager.extraSpecialArgs = { inherit inputs hostname; };
         home-manager.sharedModules = [
+          # inputs.niri.homeModules.niri
           inputs.sops-nix.homeManagerModules.sops
           inputs.walker.homeManagerModules.default
           inputs.nix-flatpak.homeManagerModules.nix-flatpak

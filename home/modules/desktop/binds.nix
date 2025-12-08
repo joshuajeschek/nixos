@@ -13,7 +13,7 @@
 	      "$mod, F, togglefloating,"
 	      "$mod, M, fullscreen, 1"
 	      "$mod SHIFT, M, fullscreen, 0"
-	      "$mod CTRL, E, exec, walker -m emojis"
+	      "$mod CTRL, E, exec, walker -m symbols"
 	      "$mod, V, exec, walker -m clipboard"
         # ",PRINT, exec, grimblast --notify copysave area ${screenshot.dir}/${screenshot.name}"
         ", PRINT, exec, hyprshot --freeze -m region"
