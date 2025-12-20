@@ -47,11 +47,15 @@ capacity() {
 
 show() {
   BAT=`ls /sys/class/power_supply | grep BAT | head -n 1`
-  STA=`cat /sys/class/power_supply/${BAT}/status`
-  if [ $STA = 'Full' ]; then
-    echo ''
+  if [[ -n $BAT ]]; then
+    STA=`cat /sys/class/power_supply/${BAT}/status`
+    if [ $STA = 'Full' ]; then
+      echo ''
+    else
+      echo '​'
+    fi
   else
-    echo '​'
+    echo ''
   fi
 }
 

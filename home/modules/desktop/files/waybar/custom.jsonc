@@ -101,6 +101,10 @@
     "format": "{}",
     "exec": "$HOME/.config/waybar/quicksetting.sh veil",
     "on-click": "test -f /tmp/veil.pid && kill $(cat /tmp/veil.pid) || $HOME/.config/eww/scripts/veil"
+  },
+  "custom/projector": {
+    "format": "󰐮",
+    "on-click": "curl http://192.168.178.21:8123/api/webhook/-QpmuVAKi34OBytPZMjl56m_n"
   }
   // "custom/brightness": {
   //   "format": "{icon} {percentage}%",

@@ -149,6 +149,10 @@ label:disabled {
   margin-left: 5px;
 }
 
+#quicksettings > * {
+  margin: 0 10px;
+}
+
 #custom-icon-left {
   background: @primary;
   border-radius: 20px 0 0 20px;

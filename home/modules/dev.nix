@@ -39,6 +39,7 @@ in
     android-tools
     adbfs-rootless
     bento4
+    platformio
     # custom commands
     make-nix-shell
   ];

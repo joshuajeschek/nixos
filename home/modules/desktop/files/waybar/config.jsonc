@@ -78,7 +78,8 @@
   "group/quicksettings": {
     "orientation": "inherit",
     "modules": [
-      "custom/veil"
+      "custom/veil",
+      "custom/projector"
     ]
   },
   "reload_style_on_change": true,
