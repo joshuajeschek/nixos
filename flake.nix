@@ -19,6 +19,12 @@
     private.url = "path:./private";
     private.flake = false;
 
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    apple-emojis.url = "github:samuelngs/apple-emoji-linux";
+    apple-emojis.inputs.nixpkgs.follows = "nixpkgs";
+
     elephant.url = "github:abenz1267/elephant";
     elephant.inputs.nixpkgs.follows = "nixpkgs";
     walker.url = "github:abenz1267/walker";
@@ -45,6 +51,7 @@
         home-manager.sharedModules = [
           # inputs.niri.homeModules.niri
           inputs.sops-nix.homeManagerModules.sops
+          inputs.stylix.homeModules.stylix
           inputs.walker.homeManagerModules.default
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
         ];

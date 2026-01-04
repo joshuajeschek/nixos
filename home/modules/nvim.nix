@@ -50,6 +50,7 @@
       vim-prisma
       # kdl-vim
       typst-vim
+      # zotcite
       ## treesitter
       nvim-treesitter.withAllGrammars
       rainbow-delimiters-nvim # replaces mrjones2014/nvim-ts-rainbow

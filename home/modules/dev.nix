@@ -25,6 +25,8 @@ in
     gnumake
     texliveFull
     typst
+    hayagriva
+    tinymist # typst lsp
     gcc
     gdb
     python312

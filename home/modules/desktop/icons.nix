@@ -13,7 +13,7 @@ let
       "0hq3i7c2l50445an9glhhg47kj26y16svfajc6naqn307ph9vzc3")
     (mkIcon "ecosia"
       "https://www.ecosia.org/static/icons/favicon.ico"
-      "Az6a/j4qSQntWeAXsmc6QpEZQyNDFNjaIK9J27dCwW8=")
+      "sha256-XGGdLe0EiP8mSXdjQ3FgJn7QVxnER2xzkkD8CI1f/c8=")
     (mkIcon "home-manager"
       "https://avatars.githubusercontent.com/u/33221035"
       "lupUu19yxO6FdRAM/irWcs2C0O7exl266irX8MWlSvE=")

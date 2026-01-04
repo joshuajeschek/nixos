@@ -48,7 +48,7 @@
   },
   "custom/shutdown": {
     "format": "",
-    "tooltip-format": "Shut It DOWN 🙅",
+    "tooltip-format": "Shut It DOWN 🙅🏼‍♀️",
     "on-click": "shutdown -h now"
   },
   "custom/reboot-linux": {

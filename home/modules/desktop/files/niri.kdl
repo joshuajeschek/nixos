@@ -5,7 +5,7 @@
 
 cursor {
     xcursor-theme "bibata-sage"
-    xcursor-size 20
+    xcursor-size 48
 }
 
 // Input device configuration.

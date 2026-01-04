@@ -86,9 +86,9 @@ in
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.wireless.iwd.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
+  # networking.networkmanager.wifi.backend = "iwd";
 
   sops.secrets = {
     "networks/eduroam" = { path = "/var/lib/iwd/eduroam.8021x"; };
@@ -203,9 +203,11 @@ in
     slurp
     pipewire
     wireplumber
-    zathura
+    zathura # <- deletable?
+    impala # iwd tui
   ];
 
+  services.udisks2.enable = true;
   services.davfs2.enable = true;
   services.flatpak.enable = true;
 

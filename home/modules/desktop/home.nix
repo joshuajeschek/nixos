@@ -1,10 +1,10 @@
 { config, pkgs, inputs, ... }:
 
 let
-  wallpaper = pkgs.fetchurl {
-    url = "https://cloud.jeschek.eu/s/6MJ6kZ3itQ5Ea73/download/rivendell.png";
-    hash = "sha256-AE3wqoOKXyWsoeUFsVlYqTPDkqpAsQdk3k7qGAn0cmc=";
-  };
+  # wallpaper = pkgs.fetchurl {
+  #   url = "https://cloud.jeschek.eu/s/6MJ6kZ3itQ5Ea73/download/rivendell.png";
+  #   hash = "sha256-AE3wqoOKXyWsoeUFsVlYqTPDkqpAsQdk3k7qGAn0cmc=";
+  # };
   screenshotDir = "${config.home.homeDirectory}/Pictures/Screenshots";
   lr = layer: rules: builtins.map (rule: "${rule},${layer}") rules;
 
@@ -36,7 +36,7 @@ in
     HYPRSHOT_DIR = screenshotDir;
   };
 
-  gtk.theme = "Adwaita:dark";
+  # gtk.theme = "Adwaita:dark";
 
   home.packages = with pkgs; [
     egl-wayland
@@ -45,7 +45,7 @@ in
     hyprpicker
     hyprshot
     grimblast
-    nemo
+    nemo-with-extensions
     bemoji
     hyprcursor
     playerctl
@@ -61,6 +61,7 @@ in
   ];
 
 # HYPRLAND
+  stylix.targets.hyprland.colors.enable = false;
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -190,24 +191,24 @@ in
   };
 
 # HYPRPAPER
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = "on";
-      preload = [
-        (builtins.toString wallpaper)
-      ];
-
-      wallpaper = [
-        "HDMI-A-1,${builtins.toString wallpaper}"
-        "HDMI-A-2,${builtins.toString wallpaper}"
-        "DP-1,${builtins.toString wallpaper}"
-        "DP-2,${builtins.toString wallpaper}"
-        "DP-3,${builtins.toString wallpaper}"
-        "eDP-1,${builtins.toString wallpaper}"
-      ];
-    };
-  };
+  # services.hyprpaper = {
+  #   enable = true;
+  #   settings = {
+  #     ipc = "on";
+  #     preload = [
+  #       (builtins.toString wallpaper)
+  #     ];
+  #
+  #     wallpaper = [
+  #       "HDMI-A-1,${builtins.toString wallpaper}"
+  #       "HDMI-A-2,${builtins.toString wallpaper}"
+  #       "DP-1,${builtins.toString wallpaper}"
+  #       "DP-2,${builtins.toString wallpaper}"
+  #       "DP-3,${builtins.toString wallpaper}"
+  #       "eDP-1,${builtins.toString wallpaper}"
+  #     ];
+  #   };
+  # };
 
 # WAYBAR
   programs.waybar.enable = true;
@@ -220,15 +221,15 @@ in
         width = 50;
         show-actions = true;
       };
-      colors = {
-        text            = "EBDBB2FF";
-        match           = "EBDBB2FF";
-        selection-text  = "EBDBB2FF";
-        selection-match = "D79920FF";
-        background      = "00000055";
-        selection       = "7C8E76ff";
-        border          = "ffffff99";
-      };
+      # colors = {
+      #   text            = "EBDBB2FF";
+      #   match           = "EBDBB2FF";
+      #   selection-text  = "EBDBB2FF";
+      #   selection-match = "D79920FF";
+      #   background      = "00000055";
+      #   selection       = "7C8E76ff";
+      #   border          = "ffffff99";
+      # };
       border = {
         width = 2;
       };

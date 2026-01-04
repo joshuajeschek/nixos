@@ -33,12 +33,26 @@
     # gcr ?
     radeontop
     # flatpak
+    pulseaudio
+    retry
+    inotify-tools
+    # newcomputermodern
   ];
 
   xdg.mimeApps.enable = true; # actual applications are defined in modules
   services.clipman.enable = true;
   services.gnome-keyring.enable = true;
   programs.ssh.enable = true;
+
+  services.udiskie = {
+    enable = true;
+    settings = {
+      program_options = {
+        # https://github.com/nix-community/home-manager/issues/632
+        file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
+      };
+    };
+  };
 
   services.flatpak = {
     enable = true;
@@ -51,9 +65,9 @@
 # BTOP
   programs.btop = {
     enable = true;
-    settings = {
-      color_theme = "gruvbox_dark";
-    };
+    # settings = {
+    #   color_theme = "gruvbox_dark";
+    # };
   };
 
 # GIT
@@ -86,6 +100,7 @@
         contents = {
           user.signingkey = "~/.ssh/id_ed25519";
           gpg.format = "ssh";
+          gpg.ssh.allowedSignersFile = "~/.config/git/allowed_ssh_signers";
           commit.gpgsign = true;
           init.defaultBranch = "main";
           checkout.defaultRemote = "origin";
